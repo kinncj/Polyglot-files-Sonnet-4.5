@@ -1,0 +1,110 @@
+r'''<!doctype html><!--
+'''#*/
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""<?php /*
+:" # Shell/Bash/Zsh detection - shells will execute, Python ignores this docstring
+if [ -n "$BASH_VERSION" ]; then
+    echo "hello from bash"
+    exit 0
+elif [ -n "$ZSH_VERSION" ]; then
+    echo "hello from zsh"
+    exit 0
+elif [ -n "$SHELL" ]; then
+    echo "hello from shell ($SHELL)"
+    exit 0
+fi
+*/
+echo "hello from php";
+__halt_compiler(); ?>
+"""
+# /// script
+# dependencies = []
+# ///
+if False: r'''
+if (":" == "<!--") then : 0 \;:\
+@ECHO OFF||:;fi;:||REM<<'EXIT'
+<NUL SET /P =[1A[K[1A
+ECHO HELLO FROM CMD
+POWERSHELL.EXE -c "iex ((Get-Content '%~f0')[6..36] -join [Environment]::Newline)"
+GOTO :END
+((Get-Content ".\ultimate.polyglot")[41..52] -join [Environment]::Newline) | Out-File -FilePath "$Env:Temp\cask.html" -Force
+$L = (New-Object -comObject WScript.Shell).CreateShortcut("web.lnk")
+$L.WindowStyle = 7
+$L.TargetPath = "POWERSHELL.EXE"
+$L.Arguments = '-WindowStyle Hidden -c "iex ((Get-Content ".\ultimate.polyglot")[12..36] -join [Environment]::Newline)"'
+$L.Save()
+[Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+[Reflection.Assembly]::LoadWithPartialName("System.Drawing")
+(Add-Type -PassThru -Name User32SetProcessDPIAware -MemberDefinition (@'
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    public static extern bool SetProcessDPIAware();
+'@ ))::SetProcessDPIAware()
+$D = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
+$W = New-Object System.Windows.Forms.WebBrowser
+$S = New-Object Windows.Forms.Form
+$S.Size = New-Object System.Drawing.Size(($D.Width / 4), ($D.Height / 4))
+$W.Size = $S.Size
+$S.Text = ""
+$S.ShowIcon = 0
+$S.ControlBox = 0
+$S.FormBorderStyle = "None"
+$S.StartPosition = "Manual"
+$S.Left = ($D.Width / 2) - ($S.Width / 2)
+$S.Top = ($D.Height / 2) - ($S.Height / 2)
+$S.Controls.Add($W)
+$W.Navigate(-join("file:///", ($Env:Temp), "/cask.html"))
+$S.ShowDialog()
+:END
+EXIT
+'''
+
+# Python section starts here
+
+# ============================================================================
+# PYTHON SECTION
+# ============================================================================
+def python_main():
+    """Execute Python code"""
+    print("hello from python")
+    return 0
+
+# ============================================================================
+# PHP SECTION (embedded in Python docstring)
+# ============================================================================
+# PHP code is above in docstring
+
+# ============================================================================
+# JAVA SECTION (as embedded source)
+# ============================================================================
+JAVA_SOURCE = '''public class Ultimate {
+    public static void main(String[] args) {
+        System.out.println("hello from java");
+    }
+}'''
+
+# ============================================================================
+# C# / .NET SECTION (as embedded source)  
+# ============================================================================
+CSHARP_SOURCE = '''using System;
+class Ultimate {
+    static void Main(string[] args) {
+        Console.WriteLine("hello from dotnet (csharp)");
+    }
+}'''
+
+# ============================================================================
+# PYTHON EXECUTION
+# ============================================================================
+if __name__ == "__main__" and not globals().get('__extracted__'):
+    import sys
+    sys.exit(python_main())
+
+# End of Python - HTML/JavaScript closing tags
+'''-->
+<style>*{margin:0;padding:0;border:0;outline:0;overflow:hidden} body,html{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1a;color:#0f0;font-family:monospace;font-size:2em}</style>
+<script type="text/javascript">
+console.log("hello.from.js");
+</script>
+<div>hello from html/javascript</div>
+'''
