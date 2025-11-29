@@ -1,21 +1,25 @@
-# Architecture Documentation: Ultimate 11-Language Polyglot
+# Architecture Documentation: Ultimate 8-Language Polyglot
 
 **Documentation by Claude Sonnet 4.5**  
 *November 29, 2025*
 
 ## Executive Summary
 
-This document describes the architecture of a single file (`ultimate.polyglot`) that can be validly parsed and executed by 11 different programming languages and runtimes. The implementation represents a deep exploration of parser behavior, syntax ambiguities, and language interoperability.
+This document describes the architecture of a single file (`ultimate.polyglot`) that can be validly parsed and executed by 8 different programming languages and runtimes. All listed languages are actively tested in the GitHub Actions CI/CD pipeline. The implementation represents a deep exploration of parser behavior, syntax ambiguities, and language interoperability.
 
-### Achieved Compatibility
+### Achieved Compatibility (GitHub Actions Verified)
 
-| Category | Languages | Status |
-|----------|-----------|--------|
-| **Direct Execution** | Python 3, Bash, Zsh, POSIX Shell, PHP, HTML/JavaScript | ✅ Working |
-| **Extraction Required** | Java, C#/.NET | ✅ Working |
-| **Embedded (Not Directly Executable)** | Windows Batch, PowerShell | ⚠️ Embedded but incompatible with HTML wrapper |
+| Category | Languages | Versions Tested | Status |
+|----------|-----------|----------------|--------|
+| **Direct Execution** | Python 3 | 3.9, 3.10, 3.11, 3.12 | ✅ Working |
+| **Direct Execution** | Bash, Zsh, POSIX Shell (sh) | System default | ✅ Working |
+| **Direct Execution** | PHP | 7.4, 8.0, 8.1, 8.2, 8.3 | ✅ Working |
+| **Direct Execution** | HTML/JavaScript | Browser/Node.js 20 | ✅ Working |
+| **Extraction Required** | Java | 11, 17, 21 | ✅ Working |
+| **Extraction Required** | C#/.NET | 6.0.x, 7.0.x, 8.0.x | ✅ Working |
+| **Embedded Only** | Windows Batch, PowerShell | N/A | ⚠️ Not executable due to HTML wrapper |
 
-**Total**: 9 languages with full polyglot capability, 2 languages with embedded code (11 total)
+**Total**: 8 languages with full polyglot capability (all CI tested), 2 languages with embedded-only code
 
 ## Architectural Challenges
 

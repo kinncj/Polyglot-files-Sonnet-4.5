@@ -1,22 +1,26 @@
 # Ultimate Polyglot File
 
-A single file that can be executed by 11 different programming languages and interpreters, demonstrating advanced polyglot programming techniques.
+A single file that can be executed by 8 different programming languages and interpreters, demonstrating advanced polyglot programming techniques. All languages listed below are tested in GitHub Actions CI/CD pipeline.
 
-## Supported Languages
+## Supported Languages (GitHub Actions Tested)
 
 1. **HTML/JavaScript** (Browser) - Opens directly in browser with styled output
-2. **Python 3** (Cross-platform) - `python3 ultimate.polyglot`
+2. **Python 3** (Cross-platform) - `python3 ultimate.polyglot` - Tested on versions 3.9, 3.10, 3.11, 3.12
 3. **Bash** (Linux/macOS/WSL) - `bash ultimate.polyglot`
 4. **Zsh** (Linux/macOS) - `zsh -o noglob ultimate.polyglot`
 5. **POSIX Shell** (sh) - `sh ultimate.polyglot`
-6. **PHP** (Cross-platform) - `php ultimate.polyglot`
-7. **Java** (Cross-platform) - Extract and compile
-8. **C# / .NET** (Cross-platform) - Extract and compile
-9. **JavaScript** (Console) - Embedded in HTML
-10. **Batch/CMD** (Windows) - Embedded (not directly executable due to HTML wrapper)
-11. **PowerShell** (Windows GUI) - Embedded (not directly executable due to HTML wrapper)
+6. **PHP** (Cross-platform) - `php ultimate.polyglot` - Tested on versions 7.4, 8.0, 8.1, 8.2, 8.3
+7. **Java** (Cross-platform) - Extract and compile - Tested on versions 11, 17, 21
+8. **C# / .NET** (Cross-platform) - Extract and compile - Tested on versions 6.0.x, 7.0.x, 8.0.x
 
-**Note**: The HTML doctype wrapper (required for browser rendering) prevents direct Windows Batch/CMD execution. Batch and PowerShell code are embedded in the file but require extraction or a Windows-specific variant without the HTML wrapper.
+## Embedded Languages (Not Directly Executable)
+
+The following languages have code embedded in the file structure but cannot be directly executed due to the HTML doctype wrapper requirement:
+
+- **Windows Batch/CMD** - Embedded but incompatible with HTML wrapper
+- **PowerShell** - Embedded but incompatible with HTML wrapper
+
+**Note**: The HTML doctype wrapper (required for browser rendering) prevents direct Windows Batch/CMD and PowerShell execution. These languages would require a Windows-specific variant without the HTML wrapper to be directly executable.
 
 ## Quick Start
 
