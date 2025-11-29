@@ -5,21 +5,21 @@
 
 ## Executive Summary
 
-This document describes the architecture of a single file (`ultimate.polyglot`) that can be validly parsed and executed by 8 different programming languages and runtimes. All listed languages are actively tested in the GitHub Actions CI/CD pipeline. The implementation represents a deep exploration of parser behavior, syntax ambiguities, and language interoperability.
+This document describes the architecture of a single file (`ultimate.polyglot`) that can be validly parsed and executed by 8 different programming languages and runtimes. The implementation represents a deep exploration of parser behavior, syntax ambiguities, and language interoperability.
 
-### Achieved Compatibility (GitHub Actions Verified)
+### Achieved Compatibility
 
-| Category | Languages | Versions Tested | Status |
-|----------|-----------|----------------|--------|
-| **Direct Execution** | Python 3 | 3.9, 3.10, 3.11, 3.12 | ✅ Working |
-| **Direct Execution** | Bash, Zsh, POSIX Shell (sh) | System default | ✅ Working |
-| **Direct Execution** | PHP | 7.4, 8.0, 8.1, 8.2, 8.3 | ✅ Working |
-| **Direct Execution** | HTML/JavaScript | Browser/Node.js 20 | ✅ Working |
-| **Extraction Required** | Java | 11, 17, 21 | ✅ Working |
-| **Extraction Required** | C#/.NET | 6.0.x, 7.0.x, 8.0.x | ✅ Working |
-| **Embedded Only** | Windows Batch, PowerShell | N/A | ⚠️ Not executable due to HTML wrapper |
+| Category | Languages | Status |
+|----------|-----------|--------|
+| **Direct Execution** | Python 3 | ✅ Working |
+| **Direct Execution** | Bash, Zsh, POSIX Shell (sh) | ✅ Working |
+| **Direct Execution** | PHP | ✅ Working |
+| **Direct Execution** | HTML/JavaScript | ✅ Working |
+| **Extraction Required** | Java | ✅ Working |
+| **Extraction Required** | C#/.NET | ✅ Working |
+| **Embedded Only** | Windows Batch, PowerShell | ⚠️ Not executable due to HTML wrapper |
 
-**Total**: 8 languages with full polyglot capability (all CI tested), 2 languages with embedded-only code
+**Total**: 8 languages with full polyglot capability, 2 languages with embedded-only code
 
 ## Architectural Challenges
 
@@ -292,21 +292,6 @@ Script: `test-local.sh`
 - Java extraction and compilation
 - Exit code validation
 
-### CI/CD Testing (GitHub Actions)
-Workflow: `.github/workflows/test-polyglot.yml`
-
-**Test Matrix**:
-- **Shell Languages**: Ubuntu (bash, zsh, sh) - 3 jobs
-- **Python**: Ubuntu with Python 3.9, 3.10, 3.11, 3.12 - 4 jobs
-- **PHP**: Ubuntu with PHP 7.4, 8.0, 8.1, 8.2, 8.3 - 5 jobs
-- **Java**: Ubuntu with JDK 11, 17, 21 - 3 jobs
-- **.NET**: Ubuntu with .NET 6.0, 7.0, 8.0 - 3 jobs
-- **Windows**: Windows Server 2022 (Batch/PowerShell) - 1 job (currently skipped due to HTML wrapper conflict)
-- **Cross-Platform**: Ubuntu + macOS + Windows integration - 3 jobs
-- **Structure Validation**: Marker checks - 1 job
-
-**Total**: 23 CI/CD jobs testing multiple configurations
-
 ### Edge Cases Handled
 1. **Zsh glob expansion**: Fixed with `-o noglob` flag
 2. **Python extraction guard**: Fixed with `__extracted__` global flag
@@ -357,11 +342,3 @@ This polyglot file represents a practical exploration of the limits of language 
 The architecture prioritizes browser compatibility and POSIX shell compatibility, accepting Windows Batch as a documented limitation. The extensive testing infrastructure (23 CI/CD jobs) ensures cross-platform stability and version compatibility.
 
 **Key Takeaway**: Polyglot programming is fundamentally about exploiting parser ambiguities and language-specific behaviors. Success requires deep understanding of how each language's parser handles edge cases, comments, strings, and syntax errors.
-
----
-
-*This architecture was developed through iterative experimentation, approximately 20 major revisions, and extensive testing across multiple language versions and platforms.*
-
-**Claude Sonnet 4.5**  
-*Model Context Protocol Session*  
-*November 29, 2025*

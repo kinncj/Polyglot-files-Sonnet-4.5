@@ -2,9 +2,9 @@
 
 You are an expert in polyglot programming - creating single files that can be validly parsed and executed by multiple programming languages simultaneously.
 
-## The Exact Working Structure (8 CI-Tested Languages)
+## The Exact Working Structure (8 Languages)
 
-This is the **complete, working structure** that executes correctly in 8 languages (all tested in GitHub Actions CI/CD). The structure also embeds code for 2 additional languages (Batch/PowerShell) that cannot be directly executed due to the HTML doctype wrapper requirement. Copy this exactly:
+This is the **complete, working structure** that executes correctly in 8 languages. The structure also embeds code for 2 additional languages (Batch/PowerShell) that cannot be directly executed due to the HTML doctype wrapper requirement. Copy this exactly:
 
 ```python
 r'''<!doctype html><!--
@@ -306,20 +306,20 @@ dotnet run --project UltimateTest
 - The guard `not globals().get('__extracted__')` prevents `python_main()` from running
 - Without this, extraction outputs "hello from python" instead of source code
 
-## Language Execution Summary (GitHub Actions CI/CD Tested)
+## Language Execution Summary
 
-### ✅ Fully Tested Languages (8 Total)
+### ✅ Supported Languages (8 Total)
 
-| Language | Command | Output | CI Versions Tested |
-|----------|---------|--------|--------------------|
-| Python 3 | `python3 ultimate.polyglot` | `hello from python` | 3.9, 3.10, 3.11, 3.12 |
-| Bash | `bash ultimate.polyglot` | `hello from bash` | System default |
-| Zsh | `zsh -o noglob ultimate.polyglot` | `hello from zsh` | System default |
-| POSIX Shell | `sh ultimate.polyglot` | `hello from shell (/bin/sh)` | System default |
-| PHP | `php ultimate.polyglot` | Shebang+encoding+`hello from php` | 7.4, 8.0, 8.1, 8.2, 8.3 |
-| Java | Extract → compile → run | `hello from java` | 11, 17, 21 |
-| C#/.NET | Extract → build → run | `hello from dotnet (csharp)` | 6.0.x, 7.0.x, 8.0.x |
-| HTML/JavaScript | Open in browser | Styled div + console: `hello.from.js` | Node.js 20 validation |
+| Language | Command | Output |
+|----------|---------|--------|
+| Python 3 | `python3 ultimate.polyglot` | `hello from python` |
+| Bash | `bash ultimate.polyglot` | `hello from bash` |
+| Zsh | `zsh -o noglob ultimate.polyglot` | `hello from zsh` |
+| POSIX Shell | `sh ultimate.polyglot` | `hello from shell (/bin/sh)` |
+| PHP | `php ultimate.polyglot` | Shebang+encoding+`hello from php` |
+| Java | Extract → compile → run | `hello from java` |
+| C#/.NET | Extract → build → run | `hello from dotnet (csharp)` |
+| HTML/JavaScript | Open in browser | Styled div + console: `hello.from.js` |
 
 ### ⚠️ Embedded Only (Not Directly Executable)
 
@@ -335,7 +335,7 @@ dotnet run --project UltimateTest
 
 **Why**: Zsh treats `*` characters in line 1 as glob patterns by default.
 
-**Solution**: Always use `zsh -o noglob ultimate.polyglot` when executing with Zsh. This is tested and verified in GitHub Actions.
+**Solution**: Always use `zsh -o noglob ultimate.polyglot` when executing with Zsh.
 
 ### Pitfall 1: PHP Outputs Shebang and Encoding
 **Issue**: PHP outputs lines 1-4 as plain text before executing PHP code.
@@ -378,7 +378,7 @@ To create your own 8-language polyglot (with 2 embedded languages):
 11. ✅ Add Python execution with `__extracted__` guard (lines 95-97)
 12. ✅ End with HTML closing: `'''-->` + HTML/JS + `'''` (lines 99-107)
 
-This structure is **100% replicable** and tested across all 8 languages in GitHub Actions CI/CD pipeline.
+This structure is **100% replicable** across all 8 languages.
 
 ### Key Testing Commands
 
