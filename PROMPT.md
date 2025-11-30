@@ -1,18 +1,61 @@
-# Expert System Prompt: Ultimate 8-Language Polyglot Architecture
+# Expert System Prompt: Create an 8-Language Polyglot File
 
 You are an expert in polyglot programming - creating single files that can be validly parsed and executed by multiple programming languages simultaneously.
 
-## The Exact Working Structure (8 Languages)
+## Your Task
 
-This is the **complete, working structure** that executes correctly in 8 languages. The structure also embeds code for 2 additional languages (Batch/PowerShell) that cannot be directly executed due to the HTML doctype wrapper requirement. Copy this exactly:
+Create a single file named `ultimate.polyglot` that can be executed by 8 different programming languages:
 
+1. **Python 3** - Direct execution: `python3 ultimate.polyglot`
+2. **Bash** - Direct execution: `bash ultimate.polyglot`
+3. **Zsh** - Direct execution: `zsh -o noglob ultimate.polyglot`
+4. **POSIX Shell (sh)** - Direct execution: `sh ultimate.polyglot`
+5. **PHP** - Direct execution: `php ultimate.polyglot`
+6. **HTML/JavaScript** - Open directly in browser
+7. **Java** - Extract source, compile, and run
+8. **C#/.NET** - Extract source, build, and run
+
+Additionally, embed code for 2 more languages (though they cannot be directly executed due to HTML wrapper requirements):
+- **Windows Batch/CMD**
+- **PowerShell**
+
+## Required Output for Each Language
+
+| Language | Expected Output |
+|----------|----------------|
+| Python 3 | `hello from python` |
+| Bash | `hello from bash` |
+| Zsh | `hello from zsh` |
+| POSIX Shell | `hello from shell (/bin/sh)` |
+| PHP | Shebang+encoding lines + `hello from php` |
+| HTML/JavaScript | Styled green text on dark background: "hello from html/javascript", console: "hello.from.js" |
+| Java | `hello from java` (after extraction and compilation) |
+| C#/.NET | `hello from dotnet (csharp)` (after extraction and build) |
+
+## The Architecture Pattern
+
+The polyglot file must use this exact structure pattern:
+
+### Section 1: Browser HTML Wrapper (Lines 1-2)
 ```python
 r'''<!doctype html><!--
 '''#*/
+```
+- **Line 1**: Raw string `r'''` containing HTML doctype + HTML comment opener `<!--`
+- **Line 2**: Close raw string `'''` + Python comment `#*/`
+- **Purpose**: Browsers see doctype first and render as HTML; HTML comment `<!--` hides lines 2-98
+
+### Section 2: Python Shebang and Encoding (Lines 3-4)
+```python
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+```
+- Standard Python headers
+
+### Section 3: PHP/Shell Polyglot Section (Lines 5-19)
+```python
 """<?php /*
-:" # Shell/Bash/Zsh detection - shells will execute, Python ignores this docstring
+:" # Shell detection with colon no-op
 if [ -n "$BASH_VERSION" ]; then
     echo "hello from bash"
     exit 0
@@ -27,49 +70,35 @@ fi
 echo "hello from php";
 __halt_compiler(); ?>
 """
+```
+- **Line 5**: Opens Python docstring `"""`, starts PHP mode `<?php`, opens PHP comment `/*`
+- **Line 6**: Colon `:` is POSIX shell no-op command
+- **Lines 7-12**: Shell detection logic - each shell exits early
+- **Line 13**: Close PHP comment `*/`
+- **Line 14**: PHP execution code
+- **Line 15**: `__halt_compiler();` stops PHP from parsing rest of file
+- **Line 19**: Close Python docstring `"""`
+
+### Section 4: Python False Block with Batch/PowerShell (Lines 20-60)
+```python
 # /// script
 # dependencies = []
 # ///
 if False: r'''
-if (":" == "<!--") then : 0 \;:\
-@ECHO OFF||:;fi;:||REM<<'EXIT'
-<NUL SET /P =[1A[K[1A
-ECHO HELLO FROM CMD
-POWERSHELL.EXE -c "iex ((Get-Content '%~f0')[6..36] -join [Environment]::Newline)"
-GOTO :END
-((Get-Content ".\ultimate.polyglot")[41..52] -join [Environment]::Newline) | Out-File -FilePath "$Env:Temp\cask.html" -Force
-$L = (New-Object -comObject WScript.Shell).CreateShortcut("web.lnk")
-$L.WindowStyle = 7
-$L.TargetPath = "POWERSHELL.EXE"
-$L.Arguments = '-WindowStyle Hidden -c "iex ((Get-Content ".\ultimate.polyglot")[12..36] -join [Environment]::Newline)"'
-$L.Save()
-[Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
-[Reflection.Assembly]::LoadWithPartialName("System.Drawing")
-(Add-Type -PassThru -Name User32SetProcessDPIAware -MemberDefinition (@'
-    [System.Runtime.InteropServices.DllImport("user32.dll")]
-    public static extern bool SetProcessDPIAware();
-'@ ))::SetProcessDPIAware()
-$D = [System.Windows.Forms.Screen]::PrimaryScreen.WorkingArea
-$W = New-Object System.Windows.Forms.WebBrowser
-$S = New-Object Windows.Forms.Form
-$S.Size = New-Object System.Drawing.Size(($D.Width / 4), ($D.Height / 4))
-$W.Size = $S.Size
-$S.Text = ""
-$S.ShowIcon = 0
-$S.ControlBox = 0
-$S.FormBorderStyle = "None"
-$S.StartPosition = "Manual"
-$S.Left = ($D.Width / 2) - ($S.Width / 2)
-$S.Top = ($D.Height / 2) - ($S.Height / 2)
-$S.Controls.Add($W)
-$W.Navigate(-join("file:///", ($Env:Temp), "/cask.html"))
-$S.ShowDialog()
-:END
-EXIT
+# Batch/PowerShell code here (embedded but not directly executable)
+# Line 25: @ECHO OFF||:;fi;:||REM<<'EXIT'
+# Batch logic for Windows
+# PowerShell GUI code
+# Line 58-59: :END and EXIT
 '''
+```
+- **Lines 20-22**: PEP 723 metadata (optional)
+- **Line 23**: `if False:` with raw string `r'''` - Python never executes this block
+- **Lines 24-60**: Windows Batch and PowerShell code (embedded only)
+- **Line 60**: Close raw string `'''`
 
-# Python section starts here
-
+### Section 5: Pure Python Section (Lines 62-97)
+```python
 def python_main():
     """Execute Python code"""
     print("hello from python")
@@ -91,8 +120,14 @@ class Ultimate {
 if __name__ == "__main__" and not globals().get('__extracted__'):
     import sys
     sys.exit(python_main())
+```
+- Define `python_main()` function
+- Store Java source as string variable `JAVA_SOURCE`
+- Store C# source as string variable `CSHARP_SOURCE`
+- Execution guard: only run if not being extracted
 
-# End of Python - HTML/JavaScript closing tags
+### Section 6: HTML/JavaScript Closing (Lines 99-107)
+```python
 '''-->
 <style>*{margin:0;padding:0;border:0;outline:0;overflow:hidden} body,html{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1a;color:#0f0;font-family:monospace;font-size:2em}</style>
 <script type="text/javascript">
@@ -101,10 +136,13 @@ console.log("hello.from.js");
 <div>hello from html/javascript</div>
 '''
 ```
+- **Line 99**: Close HTML comment `-->`
+- **Lines 100-106**: Actual HTML, CSS, and JavaScript that renders
+- **Line 107**: Close Python string `'''`
 
-## Line-by-Line Breakdown
+## Critical Implementation Details
 
-### Lines 1-2: HTML Doctype Wrapper
+### 1. HTML Doctype Wrapper Strategy
 ```python
 r'''<!doctype html><!--
 '''#*/
@@ -119,7 +157,7 @@ r'''<!doctype html><!--
 - **PHP**: Not reached yet, file processing hasn't started
 - **Batch**: Not reached yet
 
-### Lines 3-4: Shebang and Encoding
+### 2. Shebang and Encoding
 ```python
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
@@ -133,7 +171,7 @@ r'''<!doctype html><!--
 - **PHP**: Still not in PHP mode (before `<?php`)
 - **Browser**: Inside HTML comment (hidden)
 
-### Lines 5-19: PHP/Shell Docstring Section
+### 3. PHP/Shell Docstring Magic
 ```python
 """<?php /*
 :" # Shell detection
@@ -173,7 +211,7 @@ __halt_compiler(); ?>
 
 **Critical PHP behavior**: PHP will output lines 1-4 as plain text before executing line 14. This is unavoidable without breaking other languages.
 
-### Lines 20-23: PEP 723 Metadata and False Block
+### 4. Python False Block Isolation
 ```python
 # /// script
 # dependencies = []
@@ -191,7 +229,7 @@ if False: r'''
 - **Batch/PowerShell**: Not reached yet (executed by Windows directly)
 - **Browser**: Still inside HTML comment
 
-### Lines 24-60: Batch/PowerShell Section
+### 5. Batch/PowerShell Embedding
 ```
 if (":" == "<!--") then : 0 \;:\
 @ECHO OFF||:;fi;:||REM<<'EXIT'
@@ -220,7 +258,7 @@ EXIT
 - **Browser**: Still inside HTML comment
 - **Line 60**: `'''` closes Python's raw string from line 23
 
-### Lines 62-97: Pure Python Section
+### 6. Python Execution and Source Embedding
 ```python
 def python_main():
     """Execute Python code"""
@@ -259,7 +297,7 @@ if __name__ == "__main__" and not globals().get('__extracted__'):
 - **Batch**: Already exited at line 59, never reaches this
 - **Browser**: Still inside HTML comment from line 1
 
-### Lines 99-107: HTML/JavaScript Section
+### 7. HTML/JavaScript Output
 ```python
 '''-->
 <style>*{margin:0;padding:0;border:0;outline:0;overflow:hidden} body,html{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1a1a;color:#0f0;font-family:monospace;font-size:2em}</style>
@@ -282,9 +320,9 @@ console.log("hello.from.js");
   - Console shows "hello.from.js"
 - **Shell/PHP/Batch**: Never reach this code (exited earlier)
 
-## Extraction Commands
+## How to Extract Compiled Language Sources
 
-### Java Extraction
+### Java
 ```bash
 python3 -c "__extracted__ = True; exec(open('ultimate.polyglot').read()); print(JAVA_SOURCE)" > Ultimate.java
 javac Ultimate.java
@@ -292,7 +330,7 @@ java Ultimate
 # Output: hello from java
 ```
 
-### C# Extraction
+### C#/.NET
 ```bash
 python3 -c "__extracted__ = True; exec(open('ultimate.polyglot').read()); print(CSHARP_SOURCE)" > Ultimate.cs
 dotnet new console -n UltimateTest --force
@@ -306,9 +344,43 @@ dotnet run --project UltimateTest
 - The guard `not globals().get('__extracted__')` prevents `python_main()` from running
 - Without this, extraction outputs "hello from python" instead of source code
 
-## Language Execution Summary
+## Key Design Principles
 
-### ✅ Supported Languages (8 Total)
+### Principle 1: Early Exit Strategy
+Each language must exit or stop parsing before reaching code sections for other languages:
+- **Shells**: Exit at line 7/9/11 via `exit 0`
+- **PHP**: Stop at line 15 via `__halt_compiler();`
+- **Browser**: Hide Python code in HTML comment `<!--...-->`
+
+### Principle 2: Multi-Layer String Wrapping
+Use Python strings to hide code from Python while making it visible to other languages:
+- Docstrings `"""..."""` hide PHP/Shell code
+- Raw strings `r'''...'''` in `if False:` blocks hide Batch/PowerShell
+- Multiline strings `'''...'''` at the end hide HTML from execution
+
+### Principle 3: Comment Exploitation
+Use comments that work differently across languages:
+- Python: `#` for single line, `"""` for multiline
+- Shell: `#` for single line, `:` as no-op command
+- PHP: `/*...*/` for multiline
+- HTML: `<!--...-->` for multiline
+- Browser sees doctype first, which triggers HTML mode
+
+### Principle 4: Extraction Guard Pattern
+For compiled languages (Java/C#), store source as Python string variables and use extraction guard:
+```python
+if __name__ == "__main__" and not globals().get('__extracted__'):
+    # Only run if not extracting
+```
+
+Extraction command sets flag before execution:
+```bash
+python3 -c "__extracted__ = True; exec(open('file').read()); print(VARIABLE_NAME)"
+```
+
+## Testing Your Implementation
+
+### ✅ Verification Checklist (8 Languages)
 
 | Language | Command | Output |
 |----------|---------|--------|
@@ -361,26 +433,43 @@ dotnet run --project UltimateTest
 
 **Solution**: Line 1 must be `r'''<!doctype html><!--` for browsers to render correctly. The HTML comment `<!--...-->` hides lines 2-98 from display.
 
-## Replication Checklist
+## Implementation Checklist
 
-To create your own 8-language polyglot (with 2 embedded languages):
+When creating the polyglot file, follow this exact sequence:
 
-1. ✅ Start with `r'''<!doctype html><!--` on line 1
-2. ✅ Close Python string with `'''#*/` on line 2
-3. ✅ Add shebang `#!/usr/bin/env python3` on line 3
-4. ✅ Open Python docstring with `"""<?php /*` on line 5
-5. ✅ Add shell detection with `:` command and exit guards (lines 6-12)
-6. ✅ Close PHP comment with `*/` (line 13)
-7. ✅ Add PHP code: `echo "hello from php";` (line 14)
-8. ✅ Use `__halt_compiler(); ?>` to stop PHP parsing (line 15)
-9. ✅ Close Python docstring with `"""` (line 19)
-10. ✅ Wrap Batch/PowerShell in `if False: r'''...'''` (lines 23-60)
-11. ✅ Add Python execution with `__extracted__` guard (lines 95-97)
-12. ✅ End with HTML closing: `'''-->` + HTML/JS + `'''` (lines 99-107)
+### Phase 1: Core Structure
+1. ✅ Line 1: `r'''<!doctype html><!--`
+2. ✅ Line 2: `'''#*/`
+3. ✅ Line 3: `#!/usr/bin/env python3`
+4. ✅ Line 4: `# -*- coding: utf-8 -*-`
 
-This structure is **100% replicable** across all 8 languages.
+### Phase 2: PHP/Shell Section
+5. ✅ Line 5: `"""<?php /*`
+6. ✅ Line 6: `:" # Shell detection`
+7. ✅ Lines 7-12: Shell version detection with `exit 0` guards
+8. ✅ Line 13: `*/` (close PHP comment)
+9. ✅ Line 14: `echo "hello from php";`
+10. ✅ Line 15: `__halt_compiler(); ?>`
+11. ✅ Line 19: `"""` (close Python docstring)
 
-### Key Testing Commands
+### Phase 3: Python False Block
+12. ✅ Lines 20-22: PEP 723 metadata (optional)
+13. ✅ Line 23: `if False: r'''`
+14. ✅ Lines 24-59: Batch/PowerShell code (embedded)
+15. ✅ Line 60: `'''` (close raw string)
+
+### Phase 4: Python Logic
+16. ✅ Define `python_main()` function
+17. ✅ Define `JAVA_SOURCE` string variable with Java code
+18. ✅ Define `CSHARP_SOURCE` string variable with C# code
+19. ✅ Add execution guard: `if __name__ == "__main__" and not globals().get('__extracted__'):`
+
+### Phase 5: HTML/JavaScript
+20. ✅ Line 99: `'''-->`
+21. ✅ Lines 100-106: HTML `<style>`, `<script>`, and `<div>` tags
+22. ✅ Line 107: `'''` (close Python string)
+
+### Test Commands
 
 ```bash
 # Shell variants
